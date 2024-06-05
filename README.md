@@ -140,3 +140,8 @@ int peek(Stack *s) {
 int peek(Stack *s): 스택의 최상단 요소를 확인하는 함수.
 if(isEmpty(s)): 스택이 비었는지 확인.
 return s->items[s->top]: 현재 top 요소를 반환.
+
+
+### 큐 구현 ###
+```
+```

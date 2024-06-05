@@ -1,4 +1,4 @@
-### 스택 구현
+### 스택 구현 ###
 ```
 #include<stdio.h>
 #include<stdlib.h>

@@ -1,13 +1,13 @@
 ### 스택 구현 ###
 ```
 #include<stdio.h>
-#include<stdlib.h>
+#include<stdlib.h> //동적 메모리 할당 및 유틸리티 함수를 사용하기 위해 포함
 
-#define MAX 100
+#define MAX 100 스택의 최대 크기를 100으로 정의
 
-typedef struct {
-    int top;
-    int items[MAX];
+typedef struct { //새로운 구조체 타입을 정의
+    int top; // 스택의 가장 상단 요소의 인덱스를 저장
+    int items[MAX]; //스택 요소들을 저장할 배열
 } Stack;
 
 void initStack(Stack *s) {

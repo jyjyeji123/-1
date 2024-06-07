@@ -139,7 +139,7 @@ int peek(Queue *q) { //큐의 첫 번째 요소를 확인하는 함수
 }
 ```
 
-### 백터 구현 ###
+### 동적배열 구현 ###
 ```
 #include<stdio.h>
 #include<stdlib.h>

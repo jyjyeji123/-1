@@ -138,3 +138,68 @@ int peek(Queue *q) { //큐의 첫 번째 요소를 확인하는 함수
     }
 }
 ```
+
+### 백터 구현 ###
+```
+#include<stdio.h>
+#include<stdlib.h>
+
+//벡터 구조체 정의
+
+typedef struct { //새로운 구조체 타입을 정의.
+    int *items; //벡터 요소들을 저장할 동적 배열.
+    int size; //현재 벡터의 크기.
+    int capacity; //벡터의 총 용량.
+} Vector;
+
+//벡터 초기화
+
+void initVector(Vector *v) { //벡터를 초기화하는 함수.
+    v->capacity = 4; //초기 용량을 4로 설정.
+    v->size = 0; //현재 크기를 0으로 설정.
+    v->items = (int*)malloc(sizeof(int) * v->capacity); //초기 용량만큼 메모리 할당.
+}
+
+//벡터 크기 조정
+
+void resize(Vector *v, int capacity) { //벡터의 크기를 조정하는 함수.
+    int *items = (int*)realloc(v->items, sizeof(int) * capacity); //새로운 용량만큼 메모리 재할당.
+    if (items) { //메모리 재할당이 성공했는지 확인.
+        v->items = items; //새로운 메모리 주소를 벡터에 저장.
+        v->capacity = capacity; //벡터의 용량을 업데이트.
+    }
+}
+
+//벡터에 요소 추가
+
+void add(Vector *v, int item) { //벡터에 요소를 추가하는 함수.
+    if (v->size == v->capacity) { //벡터가 가득 찼는지 확인.
+        resize(v, v->capacity * 2); // 용량이 부족할 경우 2배로 증가
+    }
+    v->items[v->size++] = item; //요소를 추가하고 크기를 증가.
+}
+
+//delete : 주어진 인덱스의 요소를 삭제
+
+void delete(Vector *v, int index) {
+    if (index < 0 || index >= v->size) return; //index < 0: 인덱스가 0보다 작으면 유효하지 않습니다, index >= v->size: 인덱스가 벡터의 현재 크기보다 크거나 같으면 유효하지 않습니다 = 인덱스가 유효하지 않은 경우 함수는 아무 작업도 하지 않고 종료합니다.
+    for (int i = index; i < v->size - 1; i++) { // 루프는 삭제할 인덱스 이후의 모든 요소를 한 칸씩 앞으로 이동시킵니다.
+        v->items[i] = v->items[i + 1]; //현재 위치의 요소를 다음 위치의 요소로 덮어씁니다.
+    }
+    v->size--; //요소를 삭제했으므로 벡터의 크기를 1 감소시킵니다.
+    if (v->size > 0 && v->size == v->capacity / 4) { //v->size > 0: 벡터가 비어 있지 않은지 확인합니다, v->size == v->capacity / 4: 벡터의 크기가 용량의 1/4인 경우 용량을 절반으로 줄입니다.
+        resize(v, v->capacity / 2); //벡터의 용량을 절반으로 줄이는 함수입니다.
+    }
+}
+
+//get : 벡터에서 주어진 인덱스의 요소를 반환
+
+int get(Vector *v, int index) {
+    if (index < 0 || index >= v->size) { //index < 0: 인덱스가 0보다 작으면 유효하지 않습니다, index >= v->size: 인덱스가 벡터의 현재 크기보다 크거나 같으면 유효하지 않습니다.
+        printf("Index out of bounds\n");
+        return -1; //인덱스가 유효하지 않으면 "Index out of bounds" 메시지를 출력하고 -1을 반환합니다.
+    }
+    return v->items[index]; //유효한 인덱스인 경우 해당 인덱스의 요소를 반환
+}
+```
+
